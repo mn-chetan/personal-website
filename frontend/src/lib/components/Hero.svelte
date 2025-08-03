@@ -5,8 +5,8 @@
   <div class="max-w-4xl mx-auto p-10">
     <!-- Professional name display -->
     <div class="mb-8">
-      <h1 class="text-6xl md:text-7xl font-bold mb-4 text-center">
-        <span class="bg-gradient-to-r from-teal-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-center">
+        <span class="bg-gradient-to-r from-teal-400 via-blue-400 to-purple-400 bg-clip-text text-transparent whitespace-nowrap">
           Chetan M N
         </span>
       </h1>
