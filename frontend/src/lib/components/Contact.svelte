@@ -1,3 +1,79 @@
+<script lang="ts">
+  let formData = {
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  };
+  
+  let isSubmitting = false;
+  let submitStatus: 'idle' | 'success' | 'error' = 'idle';
+  let statusMessage = '';
+
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+    
+    if (isSubmitting) return;
+    
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      statusMessage = 'Please fill in all required fields.';
+      submitStatus = 'error';
+      return;
+    }
+    
+    isSubmitting = true;
+    submitStatus = 'idle';
+    
+    try {
+      // Use different API endpoints for development and production
+      const apiEndpoint = import.meta.env.DEV 
+        ? '/api/contact' 
+        : 'https://formspree.io/f/your-form-id'; // Replace with your actual endpoint
+      
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        submitStatus = 'success';
+        statusMessage = result.message || 'Thank you for your message! I\'ll get back to you soon.';
+        // Reset form
+        formData = { name: '', email: '', subject: '', message: '' };
+      } else {
+        submitStatus = 'error';
+        statusMessage = result.message || 'Something went wrong. Please try again.';
+      }
+    } catch (error) {
+      // In production, fall back to mailto link
+      if (!import.meta.env.DEV) {
+        const subject = encodeURIComponent(formData.subject || 'Message from Portfolio Website');
+        const body = encodeURIComponent(`Hi Chetan,\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}`);
+        window.location.href = `mailto:chetan@chetanmn.me?subject=${subject}&body=${body}`;
+        submitStatus = 'success';
+        statusMessage = 'Opening your email client...';
+        formData = { name: '', email: '', subject: '', message: '' };
+      } else {
+        submitStatus = 'error';
+        statusMessage = 'Network error. Please check your connection and try again.';
+      }
+    } finally {
+      isSubmitting = false;
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        submitStatus = 'idle';
+        statusMessage = '';
+      }, 5000);
+    }
+  }
+</script>
+
 <section id="contact" class="py-20 px-4 sm:px-8 md:px-16 lg:px-24 bg-gray-900">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12">
@@ -10,7 +86,96 @@
     </div>
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <!-- Contact Information -->
+      <!-- Contact Form -->
+      <div class="bg-gray-800 p-8 rounded-lg border border-gray-700">
+        <h3 class="text-2xl font-semibold text-white mb-6">Send Me a Message</h3>
+        
+        <form on:submit={handleSubmit} class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                Name *
+              </label>
+              <input
+                type="text"
+                id="name"
+                bind:value={formData.name}
+                required
+                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-200"
+                placeholder="Your full name"
+              />
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                Email *
+              </label>
+              <input
+                type="email"
+                id="email"
+                bind:value={formData.email}
+                required
+                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-200"
+                placeholder="your.email@example.com"
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">
+              Subject
+            </label>
+            <input
+              type="text"
+              id="subject"
+              bind:value={formData.subject}
+              class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-200"
+              placeholder="What's this about?"
+            />
+          </div>
+          
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
+              Message *
+            </label>
+            <textarea
+              id="message"
+              rows="5"
+              bind:value={formData.message}
+              required
+              class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition duration-200 resize-vertical"
+              placeholder="Tell me about your project, ideas, or how I can help..."
+            ></textarea>
+          </div>
+          
+          <!-- Status Message -->
+          {#if statusMessage}
+            <div class="p-4 rounded-lg {submitStatus === 'success' ? 'bg-green-900 border border-green-600 text-green-200' : 'bg-red-900 border border-red-600 text-red-200'}">
+              {statusMessage}
+            </div>
+          {/if}
+          
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            class="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 disabled:hover:scale-100 disabled:transform-none"
+          >
+            {#if isSubmitting}
+              <span class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </span>
+            {:else}
+              Send Message
+            {/if}
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Information & Expertise -->
       <div class="space-y-8">
         <div class="bg-gray-800 p-6 rounded-lg border-l-4 border-teal-500">
           <h3 class="text-xl font-semibold text-teal-400 mb-4">Get In Touch</h3>
@@ -49,38 +214,38 @@
             </a>
           </div>
         </div>
-      </div>
 
-      <!-- Expertise Areas -->
-      <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg">
-        <h3 class="text-xl font-semibold text-white mb-6">What I Can Help You With</h3>
-        <div class="space-y-4">
-          <div class="flex items-start space-x-3">
-            <span class="text-teal-400 mt-1">🚀</span>
-            <div>
-              <h4 class="font-semibold text-white">Backend Development</h4>
-              <p class="text-gray-400 text-sm">Scalable APIs, microservices, real-time applications</p>
+        <!-- Expertise Areas -->
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg">
+          <h3 class="text-xl font-semibold text-white mb-4">What I Can Help You With</h3>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3">
+              <span class="text-teal-400 mt-1">🚀</span>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Backend Development</h4>
+                <p class="text-gray-400 text-xs">Scalable APIs, microservices, real-time applications</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-blue-400 mt-1">🤖</span>
-            <div>
-              <h4 class="font-semibold text-white">AI & Machine Learning</h4>
-              <p class="text-gray-400 text-sm">LLM integration, data analysis, predictive models</p>
+            <div class="flex items-start space-x-3">
+              <span class="text-blue-400 mt-1">🤖</span>
+              <div>
+                <h4 class="font-semibold text-white text-sm">AI & Machine Learning</h4>
+                <p class="text-gray-400 text-xs">LLM integration, data analysis, predictive models</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-purple-400 mt-1">💻</span>
-            <div>
-              <h4 class="font-semibold text-white">Full-Stack Solutions</h4>
-              <p class="text-gray-400 text-sm">End-to-end development, system architecture</p>
+            <div class="flex items-start space-x-3">
+              <span class="text-purple-400 mt-1">💻</span>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Full-Stack Solutions</h4>
+                <p class="text-gray-400 text-xs">End-to-end development, system architecture</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-green-400 mt-1">📊</span>
-            <div>
-              <h4 class="font-semibold text-white">Data Engineering</h4>
-              <p class="text-gray-400 text-sm">ETL pipelines, analytics, visualization</p>
+            <div class="flex items-start space-x-3">
+              <span class="text-green-400 mt-1">📊</span>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Data Engineering</h4>
+                <p class="text-gray-400 text-xs">ETL pipelines, analytics, visualization</p>
+              </div>
             </div>
           </div>
         </div>
