@@ -9,3 +9,74 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Enhanced Focus States for Accessibility */
+@layer utilities {
+  .focus-visible:focus-visible {
+    @apply outline-none ring-2 ring-teal-500 ring-offset-2 ring-offset-gray-900;
+  }
+  
+  .focus-visible-blue:focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900;
+  }
+  
+  .focus-visible-purple:focus-visible {
+    @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-gray-900;
+  }
+}
+
+/* Improved link accessibility */
+a:focus-visible {
+  @apply outline-none ring-2 ring-teal-500 ring-offset-2 ring-offset-gray-900 rounded;
+}
+
+button:focus-visible {
+  @apply outline-none ring-2 ring-teal-500 ring-offset-2 ring-offset-gray-900;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, input, textarea {
+  @apply transition-all duration-300;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Ensure proper line height for readability */
+p, span, div {
+  line-height: 1.6;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gray-400 {
+    @apply text-gray-200;
+  }
+  
+  .text-gray-300 {
+    @apply text-white;
+  }
+}

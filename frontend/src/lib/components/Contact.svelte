@@ -203,14 +203,20 @@
           <h3 class="text-xl font-semibold text-blue-400 mb-4">Professional Links</h3>
           <div class="space-y-3">
             <a href="https://github.com/mn-chetan" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center space-x-3 text-white hover:text-blue-400 transition duration-300">
-              <span class="text-blue-400">⚡</span>
-              <span>GitHub - Code Portfolio</span>
+               class="flex items-center space-x-3 text-white hover:text-blue-400 transition-all duration-300 p-3 rounded-lg hover:bg-gray-700 group">
+              <span class="text-blue-400 text-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">⚡</span>
+              <span class="flex-1">GitHub - Code Portfolio</span>
+              <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
             </a>
             <a href="https://linkedin.com/in/chetan-mn" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center space-x-3 text-white hover:text-blue-400 transition duration-300">
-              <span class="text-blue-400">💼</span>
-              <span>LinkedIn - Professional Network</span>
+               class="flex items-center space-x-3 text-white hover:text-blue-400 transition-all duration-300 p-3 rounded-lg hover:bg-gray-700 group">
+              <span class="text-blue-400 text-xl transform transition-transform duration-300 group-hover:scale-110 group-hover:animate-pulse">💼</span>
+              <span class="flex-1">LinkedIn - Professional Network</span>
+              <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
             </a>
           </div>
         </div>
@@ -219,31 +225,31 @@
         <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg">
           <h3 class="text-xl font-semibold text-white mb-4">What I Can Help You With</h3>
           <div class="space-y-3">
-            <div class="flex items-start space-x-3">
-              <span class="text-teal-400 mt-1">🚀</span>
+            <div class="flex items-start space-x-3 p-2 rounded-lg hover:bg-gray-700 transition-all duration-300 group">
+              <span class="text-teal-400 mt-1 text-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:animate-bounce">🚀</span>
               <div>
-                <h4 class="font-semibold text-white text-sm">Backend Development</h4>
+                <h4 class="font-semibold text-white text-sm group-hover:text-teal-400 transition-colors duration-300">Backend Development</h4>
                 <p class="text-gray-400 text-xs">Scalable APIs, microservices, real-time applications</p>
               </div>
             </div>
-            <div class="flex items-start space-x-3">
-              <span class="text-blue-400 mt-1">🤖</span>
+            <div class="flex items-start space-x-3 p-2 rounded-lg hover:bg-gray-700 transition-all duration-300 group">
+              <span class="text-blue-400 mt-1 text-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:animate-pulse">🤖</span>
               <div>
-                <h4 class="font-semibold text-white text-sm">AI & Machine Learning</h4>
+                <h4 class="font-semibold text-white text-sm group-hover:text-blue-400 transition-colors duration-300">AI & Machine Learning</h4>
                 <p class="text-gray-400 text-xs">LLM integration, data analysis, predictive models</p>
               </div>
             </div>
-            <div class="flex items-start space-x-3">
-              <span class="text-purple-400 mt-1">💻</span>
+            <div class="flex items-start space-x-3 p-2 rounded-lg hover:bg-gray-700 transition-all duration-300 group">
+              <span class="text-purple-400 mt-1 text-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">💻</span>
               <div>
-                <h4 class="font-semibold text-white text-sm">Full-Stack Solutions</h4>
+                <h4 class="font-semibold text-white text-sm group-hover:text-purple-400 transition-colors duration-300">Full-Stack Solutions</h4>
                 <p class="text-gray-400 text-xs">End-to-end development, system architecture</p>
               </div>
             </div>
-            <div class="flex items-start space-x-3">
-              <span class="text-green-400 mt-1">📊</span>
+            <div class="flex items-start space-x-3 p-2 rounded-lg hover:bg-gray-700 transition-all duration-300 group">
+              <span class="text-green-400 mt-1 text-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:animate-bounce">📊</span>
               <div>
-                <h4 class="font-semibold text-white text-sm">Data Engineering</h4>
+                <h4 class="font-semibold text-white text-sm group-hover:text-green-400 transition-colors duration-300">Data Engineering</h4>
                 <p class="text-gray-400 text-xs">ETL pipelines, analytics, visualization</p>
               </div>
             </div>

@@ -239,12 +239,12 @@
               {@const skillKey = `${category}-${skillIndex}`}
               {@const currentLevel = animatedLevels[skillKey] || 0}
               <div 
-                class="bg-gray-900 p-6 rounded-lg hover:bg-gray-750 transition-all duration-500 transform"
+                class="bg-gray-900 p-6 rounded-lg hover:bg-gray-750 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1"
                 class:animate-pulse={animatedSkills[skillKey] && currentLevel < skill.level}
                 style="transition-delay: {skillIndex * 50}ms;"
               >
                 <div class="flex justify-between items-start mb-3">
-                  <h4 class="font-semibold text-white text-sm leading-tight">{skill.name}</h4>
+                  <h4 class="font-semibold text-white text-sm leading-tight hover:text-{categoryData.color === 'teal' ? 'teal' : categoryData.color === 'blue' ? 'blue' : 'purple'}-400 transition-colors duration-300">{skill.name}</h4>
                   <span 
                     class="text-xs font-medium {colorClasses.text} bg-gray-800 px-2 py-1 rounded transition-all duration-300"
                     class:scale-110={animatedSkills[skillKey] && currentLevel >= skill.level}
@@ -264,7 +264,7 @@
                   ></div>
                 </div>
                 
-                <p class="text-xs text-gray-400 leading-relaxed">{skill.description}</p>
+                <p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{skill.description}</p>
               </div>
             {/each}
           </div>
