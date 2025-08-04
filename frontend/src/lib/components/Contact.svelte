@@ -29,7 +29,7 @@
       // Use different API endpoints for development and production
       const apiEndpoint = import.meta.env.DEV 
         ? '/api/contact' 
-        : 'https://formspree.io/f/your-form-id'; // Replace with your actual endpoint
+        : 'https://formspree.io/f/mldlpddj'; // Your Formspree endpoint
       
       const response = await fetch(apiEndpoint, {
         method: 'POST',
